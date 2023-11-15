@@ -24,7 +24,7 @@ for word in words:
 
 # calculate probability distribution, generate names
 
-G = torch.Generator().manual_seed(2147483648)
+G = torch.Generator().manual_seed(3347283431)
 
 for i in range(10):
     out = []
