@@ -24,26 +24,31 @@ for word in words:
         
         N[ix1, ix2, ix3, ix4] += 1
 
-# calculate probability distribution, generate names
+# Function to adjust probabilities based on temperature
+def adjust_probs(probs, temperature=1.0):
+    if temperature == 0.0:
+        return torch.argmax(probs).unsqueeze(0)  # Greedy selection at temperature 0
+    else:
+        probs_flat = probs.view(-1)
+        adjusted_ix = torch.multinomial(probs_flat, num_samples=1)
+        return adjusted_ix
 
 G = torch.Generator().manual_seed(3822483571)
+temperature = 0.7  # Set the temperature value (adjust as needed)
 
 for i in range(9):
     out = []
     ix1 = ix2 = ix3 = 0
     while True:
         p = N[ix1, ix2, ix3].float()
-        
         p = p / p.sum()
         
-        ix4 = torch.multinomial(p, num_samples=1,
-                                replacement=True,
-                                generator=G).item()
-        out.append(it[ix4])
+        adjusted_ix = adjust_probs(p, temperature)
+        out.append(it[adjusted_ix.item()])
         ix1 = ix2
         ix2 = ix3
-        ix3 = ix4
+        ix3 = adjusted_ix
         
-        if ix4 == 0:
+        if adjusted_ix == 0:
             break
     print(''.join(out[:-1]))
