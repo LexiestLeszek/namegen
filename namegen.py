@@ -1,54 +1,63 @@
 import torch
 
-# load dataset (32k names) and sort unique chars (meta tokenizer)
-words = open('names.txt', 'r').read().splitlines()
+class NameGen:
+    def __init__(self):
+        self.characters = None
+        self.stoi = None
+        self.itos = None
+        self.fourgrams = None
+        self.generator = None
+        self.temperature =  0.7
 
-chars = sorted(list(set(''.join(words))))
+    def load_and_train(self, filename):
+        # Load dataset and prepare character mappings
+        with open(filename, 'r') as f:
+            words = f.read().splitlines()
 
-st = {s: i + 1 for i, s in enumerate(chars)}
-st['.'] = 0
+        self.characters = sorted(list(set(''.join(words))))
+        self.stoi = {s: i +  1 for i, s in enumerate(self.characters)}
+        self.stoi['.'] =  0
+        self.itos = {i: s for s, i in self.stoi.items()}
 
-it = {i: s for s, i in st.items()}
+        # Calculate frequency of four characters occurring together
+        self.fourgrams = torch.zeros((27,  27,  27,  27), dtype=torch.int32)
+        for word in words:
+            chs = ['.', '.', '.'] + list(word) + ['.', '.', '.']
+            for ch1, ch2, ch3, ch4 in zip(chs, chs[1:], chs[2:], chs[3:]):
+                ix1 = self.stoi[ch1]
+                ix2 = self.stoi[ch2]
+                ix3 = self.stoi[ch3]
+                ix4 = self.stoi[ch4]
+                self.fourgrams[ix1, ix2, ix3, ix4] +=  1
 
-# calculate frequency of four chars occurring together
-N = torch.zeros((27, 27, 27, 27), dtype=torch.int32)
+    def adjust_probs(self, probs, temperature=1.0):
+        if temperature ==  0.0:
+            return torch.argmax(probs).unsqueeze(0)  # Greedy selection at temperature  0
+        else:
+            probs_flat = probs.view(-1)
+            adjusted_ix = torch.multinomial(probs_flat, num_samples=1)
+            return adjusted_ix
 
-for word in words:
-    chs = ['.', '.', '.'] + list(word) + ['.', '.', '.']
-    
-    for ch1, ch2, ch3, ch4 in zip(chs, chs[1:], chs[2:], chs[3:]):
-        ix1 = st[ch1]
-        ix2 = st[ch2]
-        ix3 = st[ch3]
-        ix4 = st[ch4]
-        
-        N[ix1, ix2, ix3, ix4] += 1
+    def generate_names(self, num_words=1):
+        self.generator = torch.Generator().manual_seed(3822483571)
 
-# Function to adjust probabilities based on temperature
-def adjust_probs(probs, temperature=1.0):
-    if temperature == 0.0:
-        return torch.argmax(probs).unsqueeze(0)  # Greedy selection at temperature 0
-    else:
-        probs_flat = probs.view(-1)
-        adjusted_ix = torch.multinomial(probs_flat, num_samples=1)
-        return adjusted_ix
+        for _ in range(num_words):
+            out = []
+            ix1 = ix2 = ix3 =  0
+            while True:
+                p = self.fourgrams[ix1, ix2, ix3].float()
+                p = p / p.sum()
+                
+                adjusted_ix = self.adjust_probs(p, self.temperature)
+                out.append(self.itos[adjusted_ix.item()])
+                ix1 = ix2
+                ix2 = ix3
+                ix3 = adjusted_ix
+                
+                if adjusted_ix ==  0:
+                    break
+            print(''.join(out[:-1]))
 
-G = torch.Generator().manual_seed(3822483571)
-temperature = 0.7  # Set the temperature value (adjust as needed)
-
-for i in range(9):
-    out = []
-    ix1 = ix2 = ix3 = 0
-    while True:
-        p = N[ix1, ix2, ix3].float()
-        p = p / p.sum()
-        
-        adjusted_ix = adjust_probs(p, temperature)
-        out.append(it[adjusted_ix.item()])
-        ix1 = ix2
-        ix2 = ix3
-        ix3 = adjusted_ix
-        
-        if adjusted_ix == 0:
-            break
-    print(''.join(out[:-1]))
+model = NameGen()
+model.load_and_train('names.txt')
+model.generate_names(num_words=5)
