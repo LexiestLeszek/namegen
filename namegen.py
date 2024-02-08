@@ -30,8 +30,6 @@ class NameGen:
                 self.fourgrams[ix1, ix2, ix3, ix4] +=  1
 
     def generate_names(self, num_words=1):
-        self.generator = torch.Generator().manual_seed(3822483571)
-        
         for _ in range(num_words):
             out = []
             ix1 = ix2 = ix3 =  0
