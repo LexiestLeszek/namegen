@@ -7,7 +7,6 @@ class NameGen:
         self.itos = None
         self.fourgrams = None
         self.generator = None
-        self.temperature =  0.7
 
     def load_and_train(self, filename):
         # Load dataset and prepare character mappings
@@ -30,25 +29,19 @@ class NameGen:
                 ix4 = self.stoi[ch4]
                 self.fourgrams[ix1, ix2, ix3, ix4] +=  1
 
-    def adjust_probs(self, probs, temperature=1.0):
-        if temperature ==  0.0:
-            return torch.argmax(probs).unsqueeze(0)  # Greedy selection at temperature  0
-        else:
-            probs_flat = probs.view(-1)
-            adjusted_ix = torch.multinomial(probs_flat, num_samples=1)
-            return adjusted_ix
-
     def generate_names(self, num_words=1):
         self.generator = torch.Generator().manual_seed(3822483571)
-
+        
         for _ in range(num_words):
             out = []
             ix1 = ix2 = ix3 =  0
             while True:
                 p = self.fourgrams[ix1, ix2, ix3].float()
                 p = p / p.sum()
-                
-                adjusted_ix = self.adjust_probs(p, self.temperature)
+
+                probs_flat = p.view(-1)
+                adjusted_ix = torch.multinomial(probs_flat, num_samples=1)
+                    
                 out.append(self.itos[adjusted_ix.item()])
                 ix1 = ix2
                 ix2 = ix3
@@ -58,6 +51,7 @@ class NameGen:
                     break
             print(''.join(out[:-1]))
 
+# Example usage:
 model = NameGen()
 model.load_and_train('names.txt')
 model.generate_names(num_words=5)
