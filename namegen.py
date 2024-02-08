@@ -6,7 +6,6 @@ class NameGen:
         self.stoi = None
         self.itos = None
         self.fourgrams = None
-        self.generator = None
 
     def load_and_train(self, filename):
         # Load dataset and prepare character mappings
