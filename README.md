@@ -3,12 +3,19 @@ Single-file implementation of a character-level language model using a recurrent
 
 Much simpler than Karpathy's makemore and minGPT, the idea is to showcase how generative AI can be done on a very small scale - generating names. The task of generating a coherent name is pretty much the same as the task of generating a paragraph of text, the only difference is that we use combinations of letters, not combinations of words.
 
-1. Loads a dataset of names from a file named 'names.txt' and processes the data.
-2. Creates a character-level RNN model using PyTorch.
-3. Defines functions for training the model, generating new sequences of characters, and sampling from the model.
-4. Trains the RNN model on the dataset of names.
-5. Generates new sequences of characters (names) using the trained model.
+# Two main methods:
+load_and_train(datasetname): 
+1. Loads a dataset of names from a file named 'names.txt', processes the data, tokenizes the data by splitting it using new line as separator
+2. Creates and trains character-level RNN model using PyTorch, storing it in the self.fourgrams variable.
+generate_name(number_of_names)s:
+- Generates new sequences of characters (names) using the trained model.
 
-In this model, the weights are the frequencies of occurrence of sequences of four symbols, which are stored in the fourgrams tensor. This tensor is a four-dimensional array, where each axis corresponds to a character index in the itos map.
+# How to run
+1. `pip install torch`
+2. `python run namegen.py`
 
-The weights of the model, that is, the frequency of occurrence of four grams, are stored in the cells of this tensor. For example, the value fourgrams[0][1][2][3] would contain the frequency of occurrence of the character sequence 'abcd'.
+# Weights
+In this model, the weights are the frequencies of occurrence of sequences of four symbols, which are stored in the fourgrams tensor. This tensor is a four-dimensional array, where each axis corresponds to a character index in the itos map. The weights of the model, that is, the frequency of occurrence of four grams, are stored in the cells of this tensor. For example, the value fourgrams[0][1][2][3] would contain the frequency of occurrence of the character sequence 'abcd'. They can be stored separately if you add something like torch.save() at the end of load_and_train() method.
+
+# Usage
+Feel free to fork it and use it however you want.
