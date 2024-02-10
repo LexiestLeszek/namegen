@@ -38,17 +38,23 @@ class NameGen:
 
                 probs_flat = p.view(-1)
                 adjusted_ix = torch.multinomial(probs_flat, num_samples=1)
-                    
-                out.append(self.itos[adjusted_ix.item()])
+                
+                # Capitalize the first character of the name
+                name = self.itos[adjusted_ix.item()]
+
+                out.append(name)
+                
                 ix1 = ix2
                 ix2 = ix3
                 ix3 = adjusted_ix
                 
                 if adjusted_ix ==  0:
                     break
-            print(''.join(out[:-1]))
+            out = ''.join(out[:-1])
+            capitalized_out = out[0].upper() + out[1:]
+            print(capitalized_out)
 
 # Example usage:
 model = NameGen()
 model.load_and_train('names.txt')
-model.generate_names(num_words=5)
+model.generate_names(num_words=10)
