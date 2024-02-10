@@ -1,5 +1,5 @@
 # namegen
-Implementation of a character-level language model using a recurrent neural network (RNN) with the PyTorch library. The code trains the RNN on a dataset of names to generate new sequences of characters that resemble names.
+Single-file implementation of a character-level language model using a recurrent neural network (RNN) with the PyTorch library. The code trains the RNN on a dataset of names to generate new sequences of characters that resemble names. The model "learns" sequences based on four characters and as a result, learns to generate pretty good names.
 
 1. Loads a dataset of names from a file named 'names.txt' and processes the data.
 2. Creates a character-level RNN model using PyTorch.
