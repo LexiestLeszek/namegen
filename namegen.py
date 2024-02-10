@@ -18,6 +18,7 @@ class NameGen:
         self.itos = {i: s for s, i in self.stoi.items()}
 
         # Calculate frequency of four characters occurring together
+        # 27 is the number of letters in alphabet, you can write any number you want depending on your CPU
         self.fourgrams = torch.zeros((27,  27,  27,  27), dtype=torch.int32)
         for word in words:
             chs = ['.', '.', '.'] + list(word) + ['.', '.', '.']
@@ -56,5 +57,5 @@ class NameGen:
 
 # Example usage:
 model = NameGen()
-model.load_and_train('names.txt')
+model.load_and_train('male_names_rus.txt')
 model.generate_names(num_words=10)
