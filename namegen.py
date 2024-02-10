@@ -57,5 +57,5 @@ class NameGen:
 
 # Example usage:
 model = NameGen()
-model.load_and_train('male_names_rus.txt')
+model.load_and_train('names.txt')
 model.generate_names(num_words=10)
