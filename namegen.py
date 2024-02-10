@@ -18,7 +18,7 @@ class NameGen:
         self.itos = {i: s for s, i in self.stoi.items()}
 
         # Calculate frequency of four characters occurring together
-        # 27 is the number of letters in alphabet, you can write any number you want depending on your CPU
+        # 27 is the number of letters in alphabet + dot, you can write any number you want depending on your CPU
         self.fourgrams = torch.zeros((27,  27,  27,  27), dtype=torch.int32)
         for word in words:
             chs = ['.', '.', '.'] + list(word) + ['.', '.', '.']
@@ -31,7 +31,7 @@ class NameGen:
 
     def generate_names(self, num_words=1):
         for _ in range(num_words):
-            out = []
+            name = []
             ix1 = ix2 = ix3 =  0
             while True:
                 p = self.fourgrams[ix1, ix2, ix3].float()
@@ -40,10 +40,9 @@ class NameGen:
                 probs_flat = p.view(-1)
                 adjusted_ix = torch.multinomial(probs_flat, num_samples=1)
                 
-                # Capitalize the first character of the name
-                name = self.itos[adjusted_ix.item()]
+                out = self.itos[adjusted_ix.item()]
 
-                out.append(name)
+                name.append(out)
                 
                 ix1 = ix2
                 ix2 = ix3
@@ -51,11 +50,12 @@ class NameGen:
                 
                 if adjusted_ix ==  0:
                     break
-            out = ''.join(out[:-1])
-            capitalized_out = out[0].upper() + out[1:]
-            print(capitalized_out)
+            
+            name = ''.join(name[:-1])
+            # adding capitalization tp the first letter of each name
+            name_capitalized = name[0].upper() + name[1:]
+            print(name_capitalized)
 
-# Example usage:
 model = NameGen()
 model.load_and_train('names.txt')
 model.generate_names(num_words=10)
