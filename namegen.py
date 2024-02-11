@@ -55,10 +55,10 @@ class NameGen:
         #torch.save(self.fourgrams, "namegen_weights.pt")
         # Save the trained model weights
 
-    def generate_names(self, num_words=1):
+    def generate_names(self, num_names=1):
         # Passing the number of words to generate
         
-        for _ in range(num_words):
+        for _ in range(num_names):
             name = []
             ix1 = ix2 = ix3 = 0
             # Initialize indices for generating names
@@ -95,4 +95,4 @@ class NameGen:
 # Usage
 model = NameGen()
 model.train('names.txt')
-model.generate_names(num_words=10)
+model.generate_names(num_names=10)
