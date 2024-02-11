@@ -17,7 +17,7 @@ Open the terminal an type:
 1. `git clone https://github.com/LexiestLeszek/namegen.git`
 2. `pip install torch`
 3. `python namegen.py`
-The model will generate 10 names.
+Train the model (takes around 10-20 sec) and generate 10 names.
 
 # Weights, Tensors, nGrams
 In this model, the fourgrams are the frequencies of occurrence of sequences of four symbols, which are stored in the fourgrams tensor called self.fourgrams. Basically, these are the weights of the model. This tensor is a four-dimensional array, where each axis corresponds to a character index in the itos map. The frequency of occurrence of four grams, are stored in the cells of this tensor. For example, the value self.fourgrams[1][2][3][4] would contain the frequency of occurrence of the character sequence 'abcd', and the dot has the index of [0], because we need some kind of a token to understand where is the beginning and end of the name, in case of this project we use the theree dots in a row as a unique sequence that signals that we reached the end of word. The tensor can be stored separately if you add something like torch.save('tensor.pt') at the end of train() method.
