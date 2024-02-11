@@ -38,15 +38,16 @@ class NameGen:
 
         self.fourgrams = torch.zeros((vocab_len, vocab_len, vocab_len, vocab_len), dtype=torch.int32)
         # Initialize a tensor to store frequency of four characters occurring together
-        # Size of each axis is dynamic and based on the vocab
+        # Size of each axis is dynamic and based on the vocab length
+        
+        # Implementation of torch.zeros without pyTorch:
+        # self.fourgrams = [[[[0 for _ in range(vocab_len)] for _ in range(vocab_len)] for _ in range(vocab_len)] for _ in range(vocab_len)]
         
         print("Trarining starts ...\n")
         for word in words:
             chs = ['.', '.', '.'] + list(word) + ['.', '.', '.']
             # Add padding dots to the word
-            # Three dots act as markers indicating the start and end of words
-            # They are added as placeholders to represent the absence of a character at the beginning and end of a word
-            # They are called sentinel characters - special symbols that mark the beginning or end of a sequence
+            # Three dots (sentinel characters) act as markers indicating the start and end of a name
             for ch1, ch2, ch3, ch4 in zip(chs, chs[1:], chs[2:], chs[3:]):
                 ix1 = self.stoi[ch1]
                 ix2 = self.stoi[ch2]
