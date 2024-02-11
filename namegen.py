@@ -8,7 +8,7 @@ class NameGen:
         self.fourgrams = None
     # Defining the NameGen class with initialization of attributes
 
-    def load_and_train(self, filename):
+    def train(self, filename):
         # Load dataset and train the model
         
         with open(filename, 'r') as f:
@@ -17,14 +17,15 @@ class NameGen:
 
         self.characters = sorted(list(set(''.join(words))))
         # Create vocabulary - get and sort unique characters in the dataset (basically alphabet)
+        
         vocab_len = len(self.characters) + 1
-        # Calculate the vocabulary length (characters) + dot
         print("Vocab : ", self.characters)
+        # Calculate the vocabulary length (characters) + dot and print it
         
         self.stoi = {}
         for i, s in enumerate(self.characters):
             self.stoi[s] = i +  1
-        # Create character-to-index
+        # Create character-to-index mapping
         
         self.stoi['.'] = 0
         # The dot represents marker for the start and end of a name
@@ -32,7 +33,7 @@ class NameGen:
         self.itos = {}
         for s, i in self.stoi.items():
             self.itos[i] = s
-        # Create index-to-character mappings
+        # Create index-to-character mapping
 
         self.fourgrams = torch.zeros((vocab_len, vocab_len, vocab_len, vocab_len), dtype=torch.int32)
         # Initialize a tensor to store frequency of four characters occurring together
@@ -93,5 +94,5 @@ class NameGen:
 
 # Usage
 model = NameGen()
-model.load_and_train('names.txt')
+model.train('names.txt')
 model.generate_names(num_words=10)
