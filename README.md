@@ -14,8 +14,8 @@ generate_name(number_of_names)s:
 1. `pip install torch`
 2. `python namegen.py`
 
-# ngrams
-In this model, the fourgrams are the frequencies of occurrence of sequences of four symbols, which are stored in the fourgrams tensor called self.fourgrams. This tensor is a four-dimensional array, where each axis corresponds to a character index in the itos map. The frequency of occurrence of four grams, are stored in the cells of this tensor. For example, the value fourgrams[0][1][2][3] would contain the frequency of occurrence of the character sequence 'abcd'. They can be stored separately if you add something like torch.save() at the end of load_and_train() method.
+# Weights, Tensors, nGrams
+In this model, the fourgrams are the frequencies of occurrence of sequences of four symbols, which are stored in the fourgrams tensor called self.fourgrams. Basically, these are the weights of the model. This tensor is a four-dimensional array, where each axis corresponds to a character index in the itos map. The frequency of occurrence of four grams, are stored in the cells of this tensor. For example, the value fourgrams[0][1][2][3] would contain the frequency of occurrence of the character sequence 'abcd'. They can be stored separately if you add something like torch.save() at the end of load_and_train() method.
 
 # Usage
 Feel free to fork it and use it however you want.
