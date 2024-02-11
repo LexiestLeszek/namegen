@@ -7,10 +7,10 @@ The idea of the project is to showcase the most minimal implementation of genera
 
 # Two main methods:
 **train("dataset_name.txt"):**
-Loads a dataset of names from a file named 'names.txt', processes the data, tokenizes the data by splitting it using each new line as separator. Creates and trains character-level RNN model using PyTorch, storing it in the self.fourgrams variable. During training, we use stoi to convert characters to indeces and save them into self.fourgrams.
+Loads a dataset of names from a file named 'names.txt', processes the data, tokenizes the data by splitting it using each new line as separator. Creates and trains character-level RNN model using PyTorch, storing it in the self.fourgrams variable. During training, we use char_to_ind to convert characters to indeces and save them into self.fourgrams.
 
 **generate_names(num_names=1):**
-Takes number of names as argument and generates a number of new sequences of characters (names) using the trained model. During generation, we use itos to convert indeces back to the characters and generate letters for the name.
+Takes number of names as argument and generates a number of new sequences of characters (names) using the trained model. During generation, we use ind_to_char to convert indeces back to the characters and generate letters for the name.
 
 # How to run
 Open the terminal an type:
