@@ -16,11 +16,12 @@ class NameGen:
         # Open and read the file to get a list of words, each word starts from a new line, that's whe we need splitlines()
 
         self.characters = sorted(list(set(''.join(words))))
+        print(f"Vocab Tokens: {self.characters} ")
         # Create vocabulary - get and sort unique characters in the dataset (basically alphabet)
         
         vocab_len = len(self.characters) + 1
-        print("Vocab : ", self.characters)
-        # Calculate the vocabulary length (characters) + dot and print it
+        print(f"Vocab Length: {vocab_len}\n")
+        # Calculate the vocabulary length (characters) + 1 (dot) and print it
         
         self.stoi = {}
         for i, s in enumerate(self.characters):
@@ -37,6 +38,9 @@ class NameGen:
 
         self.fourgrams = torch.zeros((vocab_len, vocab_len, vocab_len, vocab_len), dtype=torch.int32)
         # Initialize a tensor to store frequency of four characters occurring together
+        # Size of each axis is dynamic and based on the vocab
+        
+        print("Trarining starts ...")
         for word in words:
             chs = ['.', '.', '.'] + list(word) + ['.', '.', '.']
             # Add padding dots to the word
@@ -51,6 +55,7 @@ class NameGen:
                 self.fourgrams[ix1, ix2, ix3, ix4] += 1
         # Populate the fourgrams tensor with frequencies
         # self.fourgrams[1][2][3][4] would probably contain the frequency of occurrence of the 'abcd' sequence
+        print("Training finished!")
 
         #torch.save(self.fourgrams, "namegen_weights.pt")
         # Save the trained model weights
