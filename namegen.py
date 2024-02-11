@@ -16,7 +16,7 @@ class NameGen:
         # Open and read the file to get a list of words, each word starts from a new line, that's whe we need splitlines()
 
         self.characters = sorted(list(set(''.join(words))))
-        print(f"Vocab Tokens: {self.characters} ")
+        print(f"Vocab Tokens:\n {self.characters} ")
         # Create vocabulary - get and sort unique characters in the dataset (basically alphabet)
         
         vocab_len = len(self.characters) + 1
@@ -26,10 +26,13 @@ class NameGen:
         self.char_to_ind = {}
         for i, s in enumerate(self.characters):
             self.char_to_ind[s] = i +  1
-        # Create character-to-index mapping
+        # Create character-to-index mapping (key-value pairs)
         
         self.char_to_ind['.'] = 0
         # The dot represents marker for the start and end of a name
+        
+        print(f"Character to Index mapping:\n {self.char_to_ind}")
+        # Print the mapping to showcase how it works
         
         self.ind_to_char = {}
         for s, i in self.char_to_ind.items():
