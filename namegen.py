@@ -39,6 +39,7 @@ class NameGen:
         self.fourgrams = torch.zeros((vocab_len, vocab_len, vocab_len, vocab_len), dtype=torch.int32)
         # Initialize a tensor to store frequency of four characters occurring together
         # Size of each axis is dynamic and based on the vocab length
+        # dtype=torch.int32 means that the tensor will store integers using 32 bits per element
         
         # Implementation of torch.zeros without pyTorch:
         # self.fourgrams = [[[[0 for _ in range(vocab_len)] for _ in range(vocab_len)] for _ in range(vocab_len)] for _ in range(vocab_len)]
