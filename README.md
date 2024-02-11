@@ -12,8 +12,10 @@ b) Creates and trains character-level RNN model using PyTorch, storing it in the
 Takes number of names to generate and generates new sequences of characters (names) using the trained model.
 
 # How to run
-1. `pip install torch`
-2. `python namegen.py`
+Open VScode and type in terminal:
+1. `git clone https://github.com/LexiestLeszek/namegen.git`
+2. `pip install torch`
+3. `python namegen.py`
 
 # Weights, Tensors, nGrams
 In this model, the fourgrams are the frequencies of occurrence of sequences of four symbols, which are stored in the fourgrams tensor called self.fourgrams. Basically, these are the weights of the model. This tensor is a four-dimensional array, where each axis corresponds to a character index in the itos map. The frequency of occurrence of four grams, are stored in the cells of this tensor. For example, the value self.fourgrams[1][2][3][4] would contain the frequency of occurrence of the character sequence 'abcd', and the dot has the index of [0] (that is how we understand the beginning and end of the name). They can be stored separately if you add something like torch.save() at the end of load_and_train() method.
