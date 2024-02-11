@@ -13,7 +13,7 @@ class NameGen:
         
         with open(filename, 'r') as f:
             words = f.read().splitlines()
-        # Open and read the file to get a list of words
+        # Open and read the file to get a list of words, each word starts from a new line, that's whe we need splitlines()
 
         self.characters = sorted(list(set(''.join(words))))
         # Create vocabulary - get and sort unique characters in the dataset (basically alphabet)
@@ -93,5 +93,5 @@ class NameGen:
 
 # Usage
 model = NameGen()
-model.load_and_train('female_names_rus.txt')
+model.load_and_train('names.txt')
 model.generate_names(num_words=10)
