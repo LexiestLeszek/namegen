@@ -12,14 +12,16 @@ class NameGen:
         with open(filename, 'r') as f:
             words = f.read().splitlines()
 
+        # Tokenizing and creating vocab
         self.characters = sorted(list(set(''.join(words))))
+        # Number of unique charachters + dot
+        vocab_len = len(self.characters) + 1
         self.stoi = {s: i +  1 for i, s in enumerate(self.characters)}
         self.stoi['.'] =  0
         self.itos = {i: s for s, i in self.stoi.items()}
 
         # Calculate frequency of four characters occurring together
-        # 27 is the number of letters in alphabet + dot, you can write any number you want depending on your CPU
-        self.fourgrams = torch.zeros((27,  27,  27,  27), dtype=torch.int32)
+        self.fourgrams = torch.zeros((vocab_len,  vocab_len,  vocab_len,  vocab_len), dtype=torch.int32)
         for word in words:
             chs = ['.', '.', '.'] + list(word) + ['.', '.', '.']
             for ch1, ch2, ch3, ch4 in zip(chs, chs[1:], chs[2:], chs[3:]):
@@ -28,6 +30,8 @@ class NameGen:
                 ix3 = self.stoi[ch3]
                 ix4 = self.stoi[ch4]
                 self.fourgrams[ix1, ix2, ix3, ix4] +=  1
+                
+        torch.save(self.fourgrams,"namegen_weights.pt")
 
     def generate_names(self, num_words=1):
         for _ in range(num_words):
@@ -56,6 +60,7 @@ class NameGen:
             name_capitalized = name[0].upper() + name[1:]
             print(name_capitalized)
 
+# Usage
 model = NameGen()
-model.load_and_train('names.txt')
+model.load_and_train('female_names_rus.txt')
 model.generate_names(num_words=10)
