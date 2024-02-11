@@ -16,12 +16,12 @@ class NameGen:
         # Open and read the file to get a list of words, each word starts from a new line, that's whe we need splitlines()
 
         self.characters = sorted(list(set(''.join(words))))
-        print(f"Vocab Tokens:\n {self.characters} ")
+        print(f"Vocab Tokens:\n {self.characters}")
         # Create vocabulary - get and sort unique characters in the dataset (basically alphabet)
         
         vocab_len = len(self.characters) + 1
-        print(f"Vocab Length: {vocab_len}\n")
-        # Calculate the vocabulary length (characters) + 1 (dot) and print it
+        print(f"Vocab Length: {vocab_len}")
+        # Calculate the vocabulary length (characters) + 1 (for the dot) and print it
         
         self.char_to_ind = {}
         for i, s in enumerate(self.characters):
@@ -31,13 +31,13 @@ class NameGen:
         self.char_to_ind['.'] = 0
         # The dot represents marker for the start and end of a name
         
-        print(f"Character to Index mapping:\n {self.char_to_ind}")
+        print(f"Character-to-Index mapping:\n {self.char_to_ind}")
         # Print the mapping to showcase how it works
         
         self.ind_to_char = {}
         for s, i in self.char_to_ind.items():
             self.ind_to_char[i] = s
-        # Create index-to-character mapping
+        # Create index-to-character mapping (key-value pairs), basically the reverse of char_to_ind
 
         self.fourgrams = torch.zeros((vocab_len, vocab_len, vocab_len, vocab_len), dtype=torch.int32)
         # Initialize a tensor to store frequency of four characters occurring together
@@ -47,7 +47,7 @@ class NameGen:
         # Implementation of torch.zeros without pyTorch:
         # self.fourgrams = [[[[0 for _ in range(vocab_len)] for _ in range(vocab_len)] for _ in range(vocab_len)] for _ in range(vocab_len)]
         
-        print("Trarining starts ...\n")
+        print("Trarining starts ...")
         for word in words:
             chs = ['.', '.', '.'] + list(word) + ['.', '.', '.']
             # Add padding dots to the word
@@ -62,7 +62,7 @@ class NameGen:
             # Populate the fourgrams tensor with frequencies
             # self.fourgrams[1][2][3][4] would contain the frequency of occurrence of the 'abcd' sequence
         
-        print("Training finished!\n")
+        print("Training finished!")
 
         #torch.save(self.fourgrams, "namegen_weights.pt")
         # Save the trained model weights
@@ -72,6 +72,7 @@ class NameGen:
         
         for _ in range(num_names):
             name = []
+            # Empty list for a name, since every element would be generated
             ix1 = ix2 = ix3 = 0
             # Initialize indices for generating names
             
@@ -87,6 +88,8 @@ class NameGen:
                 # Randomly sample the next character index based on the input probabilities provided
 
                 out = self.ind_to_char[adjusted_ix.item()]
+                # Use ind_to_char to take sample a character (letter) by its index
+                
                 name.append(out)
                 # Append the sampled character to the name
 
