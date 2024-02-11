@@ -1,5 +1,5 @@
 # namegen
-Single-file implementation of a character-level language model using a neural network with the PyTorch library. The code trains the RNN on a dataset of names to generate new sequences of characters that resemble names. The model "learns" sequences based on four characters and as a result, learns to generate pretty good names.
+Single-file implementation of a character-level language model using a neural network with the PyTorch library. The code trains the neural network on a dataset of names to generate new sequences of characters that resemble names. The model "learns" sequences based on four characters and as a result, learns to generate pretty good names.
 
 Much simpler than Karpathy's makemore and minGPT, the idea is to showcase how generative AI can be done on a very small scale - generating names. The task of generating a coherent and normal sounding name is the minimal version of the task of generating a paragraph of text, the difference (although of course not the only one) is that we use combinations of letters, not combinations of words and the model architecture is much simpler.
 
