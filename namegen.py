@@ -6,7 +6,7 @@ class NameGen:
         self.char_to_ind = None
         self.ind_to_char = None
         self.fourgrams = None
-    # Defining the NameGen class with initialization of attributes
+        # Defining the NameGen class with initialization of attributes
 
     def train(self, filename):
         # Load dataset and train the model
@@ -49,14 +49,15 @@ class NameGen:
             chs = ['.', '.', '.'] + list(word) + ['.', '.', '.']
             # Add padding dots to the word
             # Three dots (sentinel characters) act as markers indicating the start and end of a name
+            
             for ch1, ch2, ch3, ch4 in zip(chs, chs[1:], chs[2:], chs[3:]):
                 ix1 = self.char_to_ind[ch1]
                 ix2 = self.char_to_ind[ch2]
                 ix3 = self.char_to_ind[ch3]
                 ix4 = self.char_to_ind[ch4]
                 self.fourgrams[ix1, ix2, ix3, ix4] += 1
-        # Populate the fourgrams tensor with frequencies
-        # self.fourgrams[1][2][3][4] would contain the frequency of occurrence of the 'abcd' sequence
+            # Populate the fourgrams tensor with frequencies
+            # self.fourgrams[1][2][3][4] would contain the frequency of occurrence of the 'abcd' sequence
         
         print("Training finished!\n")
 
