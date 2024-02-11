@@ -40,7 +40,7 @@ class NameGen:
         # Initialize a tensor to store frequency of four characters occurring together
         # Size of each axis is dynamic and based on the vocab
         
-        print("Trarining starts ...")
+        print("Trarining starts ...\n")
         for word in words:
             chs = ['.', '.', '.'] + list(word) + ['.', '.', '.']
             # Add padding dots to the word
@@ -54,8 +54,9 @@ class NameGen:
                 ix4 = self.stoi[ch4]
                 self.fourgrams[ix1, ix2, ix3, ix4] += 1
         # Populate the fourgrams tensor with frequencies
-        # self.fourgrams[1][2][3][4] would probably contain the frequency of occurrence of the 'abcd' sequence
-        print("Training finished!")
+        # self.fourgrams[1][2][3][4] would contain the frequency of occurrence of the 'abcd' sequence
+        
+        print("Training finished!\n")
 
         #torch.save(self.fourgrams, "namegen_weights.pt")
         # Save the trained model weights
@@ -90,9 +91,11 @@ class NameGen:
                 
                 if adjusted_ix == 0:
                     break
-                # Stop if the sampled character is a dot
+                # If the sampled character is a dot - stop
 
             name = ''.join(name[:-1])
+            # Remove the last character from the name list (the dot) and concatenate the remaining characters into string
+            
             name_capitalized = name[0].upper() + name[1:]
             print(name_capitalized)
             # Capitalize the first letter of the generated name and print it
