@@ -5,8 +5,6 @@ Much simpler than Karpathy's makemore and minGPT, the idea is to showcase how ge
 
 The idea of the project is to showcase the most minimal implementation of generative language model for education purposes.
 
-Interesting ovservation is that if you mix English names with names in other languages (say Spanish and Russian) - then the model is consisely generates English names and Spanish/Russian names, without mixing the three languaes together inside any given name.
-
 # Two main methods:
 **train("dataset_name.txt"):**
 Loads a dataset of names from a file named 'names.txt', processes the data, tokenizes the data by splitting it using each new line as separator. Creates and trains character-level RNN model using PyTorch, storing it in the self.fourgrams variable. During training, we use char_to_ind to convert characters to indeces and save them into self.fourgrams.
