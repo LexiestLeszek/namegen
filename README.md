@@ -4,11 +4,12 @@ Single-file implementation of a character-level language model using a recurrent
 Much simpler than Karpathy's makemore and minGPT, the idea is to showcase how generative AI can be done on a very small scale - generating names. The task of generating a coherent name as the model, the minimal version of the task of generating a paragraph of text, the difference (although of course not the only one) is that we use combinations of letters, not combinations of words and the model architecture is much simpler.
 
 # Two main methods:
-load_and_train(datasetname): 
-1. Loads a dataset of names from a file named 'names.txt', processes the data, tokenizes the data by splitting it using new line as separator
-2. Creates and trains character-level RNN model using PyTorch, storing it in the self.fourgrams variable.
-generate_name(number_of_names)s:
-- Generates new sequences of characters (names) using the trained model.
+*load_and_train(datasetname):*
+a) Loads a dataset of names from a file named 'names.txt', processes the data, tokenizes the data by splitting it using new line as separator
+b) Creates and trains character-level RNN model using PyTorch, storing it in the self.fourgrams variable.
+
+*generate_names(number of names):*
+Takes number of names to generate and generates new sequences of characters (names) using the trained model.
 
 # How to run
 1. `pip install torch`
