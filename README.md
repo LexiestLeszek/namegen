@@ -5,7 +5,7 @@ Much simpler than Karpathy's makemore and minGPT, the idea is to showcase how ge
 
 # Two main methods:
 *load_and_train(datasetname):*
-a) Loads a dataset of names from a file named 'names.txt', processes the data, tokenizes the data by splitting it using new line as separator
+a) Loads a dataset of names from a file named 'names.txt', processes the data, tokenizes the data by splitting it using each new line as separator
 b) Creates and trains character-level RNN model using PyTorch, storing it in the self.fourgrams variable.
 
 *generate_names(number of names):*
