@@ -7,8 +7,8 @@ Much simpler than Karpathy's makemore and minGPT, the idea is to showcase how ge
 **train("dataset_name.txt"):**
 Loads a dataset of names from a file named 'names.txt', processes the data, tokenizes the data by splitting it using each new line as separator. Creates and trains character-level RNN model using PyTorch, storing it in the self.fourgrams variable.
 
-**generate_names(number_names=1):**
-Takes number of names to generate and generates new sequences of characters (names) using the trained model.
+**generate_names(num_names=1):**
+Takes number of names as argument and and generates a number new sequences of characters (names) using the trained model.
 
 # How to run
 Open VScode and type in terminal:
