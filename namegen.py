@@ -3,8 +3,8 @@ import torch
 class NameGen:
     def __init__(self):
         self.characters = None
-        self.stoi = None
-        self.itos = None
+        self.char_to_ind = None
+        self.ind_to_char = None
         self.fourgrams = None
     # Defining the NameGen class with initialization of attributes
 
@@ -23,17 +23,17 @@ class NameGen:
         print(f"Vocab Length: {vocab_len}\n")
         # Calculate the vocabulary length (characters) + 1 (dot) and print it
         
-        self.stoi = {}
+        self.char_to_ind = {}
         for i, s in enumerate(self.characters):
-            self.stoi[s] = i +  1
+            self.char_to_ind[s] = i +  1
         # Create character-to-index mapping
         
-        self.stoi['.'] = 0
+        self.char_to_ind['.'] = 0
         # The dot represents marker for the start and end of a name
         
-        self.itos = {}
-        for s, i in self.stoi.items():
-            self.itos[i] = s
+        self.ind_to_char = {}
+        for s, i in self.char_to_ind.items():
+            self.ind_to_char[i] = s
         # Create index-to-character mapping
 
         self.fourgrams = torch.zeros((vocab_len, vocab_len, vocab_len, vocab_len), dtype=torch.int32)
@@ -50,10 +50,10 @@ class NameGen:
             # Add padding dots to the word
             # Three dots (sentinel characters) act as markers indicating the start and end of a name
             for ch1, ch2, ch3, ch4 in zip(chs, chs[1:], chs[2:], chs[3:]):
-                ix1 = self.stoi[ch1]
-                ix2 = self.stoi[ch2]
-                ix3 = self.stoi[ch3]
-                ix4 = self.stoi[ch4]
+                ix1 = self.char_to_ind[ch1]
+                ix2 = self.char_to_ind[ch2]
+                ix3 = self.char_to_ind[ch3]
+                ix4 = self.char_to_ind[ch4]
                 self.fourgrams[ix1, ix2, ix3, ix4] += 1
         # Populate the fourgrams tensor with frequencies
         # self.fourgrams[1][2][3][4] would contain the frequency of occurrence of the 'abcd' sequence
@@ -82,7 +82,7 @@ class NameGen:
                 adjusted_ix = torch.multinomial(probs_flat, num_samples=1)
                 # Randomly sample the next character index based on the input probabilities provided
 
-                out = self.itos[adjusted_ix.item()]
+                out = self.ind_to_char[adjusted_ix.item()]
                 name.append(out)
                 # Append the sampled character to the name
 
