@@ -27,7 +27,7 @@ class NameGen:
         # Create character-to-index
         
         self.stoi['.'] = 0
-        # The dot represents market for the start and end of a name
+        # The dot represents marker for the start and end of a name
         
         self.itos = {}
         for s, i in self.stoi.items():
