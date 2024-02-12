@@ -3,7 +3,7 @@ Single-file implementation of a character-level language model. The code trains 
 
 Much simpler than Karpathy's makemore and minGPT, the idea is to showcase how generative AI can be done on a very small scale - generating names. The task of generating a coherent and normal sounding name is the minimal version of the task of generating a paragraph of text, the difference (although of course not the only one) is that we use combinations of letters, not combinations of words and the model architecture is much simpler and it is, technically, not even a neural network. The core thoough is similar to modern LLMs: give a likely next token given the last n tokens.
 
-The project is made to showcase the most minimal implementation of generative language model for education purposes. It's basically statistics and randomization.
+Treat this project as "hello world" in the world of language models. The project is made to showcase the most minimal implementation of generative language model for education purposes, to show that LLMs are basically statistics and randomization. It doesn't have any neural networks in its architecture and still Markov Chain can result in a pretty good sounding names. You can also experiment with this project and try to make an Markov Chain n-gram that would generate words, old school chatbots were actually doing exactly that.
 
 # Two main methods:
 **train("dataset_name.txt"):**
