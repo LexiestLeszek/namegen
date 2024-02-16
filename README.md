@@ -1,5 +1,8 @@
 # namegen
-Single-file implementation of a character-level language model. The code trains the model based on a Markov Chain on a dataset of names to generate new sequences of characters that resemble names. The model "learns" sequences based on four characters and as a result, learns to generate pretty good names. 
+
+Goal of this educational repository is to provide a self-contained, minimalistic implementation of language model using Pytorch.
+
+Many implementations of diffusion models can be a bit overwhelming. Here, namegen: under 100 lines of code, fully self contained implementation single-file implementation of a character-level language model. The code trains the model based on a Markov Chain on a dataset of names to generate new sequences of characters that resemble names. The model "learns" sequences based on four characters and as a result, learns to generate pretty good names. 
 
 Much simpler than Karpathy's makemore and minGPT, the idea is to showcase how generative AI can be done on a very small scale - generating names. The task of generating a coherent and normal sounding name is the minimal version of the task of generating a paragraph of text, the difference (although of course not the only one) is that we use combinations of letters, not combinations of words and the model architecture is much simpler and it is, technically, not even a neural network. The core though is similar to modern LLMs: give a likely next token given the last n tokens.
 
