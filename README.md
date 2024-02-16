@@ -1,6 +1,6 @@
 # namegen
 
-Goal of this educational repository is to provide a self-contained, minimalistic implementation of language model using Pytorch.
+Goal of this educational repository is to provide a self-contained, minimalistic implementation of a language model.
 
 Many implementations of diffusion models can be a bit overwhelming. Here, namegen: under 100 lines of code, fully self contained implementation single-file implementation of a character-level language model. The code trains the model based on a Markov Chain on a dataset of names to generate new sequences of characters that resemble names. The model "learns" sequences based on four characters and as a result, learns to generate pretty good names. 
 
