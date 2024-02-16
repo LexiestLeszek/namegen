@@ -6,7 +6,7 @@ Many implementations of diffusion models can be a bit overwhelming. Here, namege
 
 Much simpler than Karpathy's makemore and minGPT, the idea is to showcase how generative AI can be done on a very small scale - generating names. The task of generating a coherent and normal sounding name is the minimal version of the task of generating a paragraph of text, the difference (although of course not the only one) is that we use combinations of letters, not combinations of words and the model architecture is much simpler and it is, technically, not even a neural network. The core though is similar to modern LLMs: give a likely next token given the last n tokens.
 
-Treat this project as "hello world" in the world of language models. The project is made to showcase the most minimal implementation of generative language model for education purposes, to show that LLMs are basically statistics and randomization. It doesn't have any neural networks in its architecture and still Markov Chain can result in a pretty good sounding names. You can also experiment with this project and try to make an Markov Chain n-gram that would generate words, old school chatbots were actually doing exactly that.
+Treat this project as "hello world" in the world of language models. The project is made to showcase the most minimal implementation of generative language model for education purposes, to show that LLMs are basically statistics and randomization. It doesn't have any neural networks in its architecture and still Markov Chain can result in a pretty good sounding names. You can also experiment with this project and try to make an Markov Chain n-gram that would generate words, old school chatbots were actually doing exactly that and with big enough dataset they were pretty good for their time.
 
 # Two main methods:
 **train("dataset_name.txt"):**
@@ -27,7 +27,7 @@ In modern LLMs (Mistral, Llama2, Qwen, etc), there are usually two files - infer
 
 The fourgrams are the frequencies of occurrence of sequences of four symbols, which are stored in the fourgrams tensor called self.fourgrams. Basically, these are the weights of the model. This tensor is a four-dimensional array, where each axis corresponds to a character index in the itos map. The frequency of occurrence of four grams, are stored in the cells of this tensor. For example, the value self.fourgrams[1][2][3][4] would contain the frequency of occurrence of the character sequence 'abcd', and the dot has the index of [0], because we need some kind of a token to understand where is the beginning and end of the name, in case of this project we use the theree dots in a row as a unique sequence that signals that we reached the end of word. The tensor can be stored separately if you add something like torch.save('tensor.pt') at the end of train() method.
 
-Modern LLMs store parameters in the form of neural network (connections of multiple parameters to each other), but in our case we just use tensor for the sake of simplicity and learning.
+Modern LLMs store parameters in the form of neural network (connections of multiple parameters to each other), but in our case we just use tensor for the sake of simplicity and learning. 
 
 # Usage
 Feel free to fork it and use it however you want.
